@@ -63,17 +63,6 @@ resources: []
 **NOT** configuring the `resources.requests.cpu/memory` and **NOT** configuring `resources.limits.cpu/memory` This configuration is a third-class QoS configuration. This configuration reduces the scheduling chances for the Pod as the K8s Kubelet on the worker Node relays resource availability status to the K8s Scheduler and gives a low-probability chance (best effort) in deploying Pod without declaring a low-cap or a high-cap for its required cpu and memory resources. 
 
 
-
-
-
-### VPA and HPA (Horizontal Pod Autoscaler) 
-
-The VPA DaemonSet profiles targeted K8s Deployments and vertically scales (cpu, memory, user-defined metrics) on predicated conditions (percentage threshold for cpu, memory or user-defined metrics) defined in the VPA for the Deployment (Pods). The VPA appropriates the correct resource configurations for the container spec in Pods. If the VPA UpdatePolicy is configured as Off, the VPA profiles the targeted Deployments and auto-calculates  the correct resource values (cpu,  memory) and K8s administrators can correctly configure or re-configure these resources in the container spec of the Pod to avoid future Pod eviction conditions during deployments. The VPA with the UpdatePolicy configuration as Off does NOT update and rollout new Pods if the VPA calculates the Pods existing configs are not sufficient. To configure the VPA to auto-configure and re-rollout the Deployments (deploy new Pods and drop the old Pods), the UpdatePolicy is configured as Auto. The auto-scaling for VPA saves costs as the receding of the vertically scaled-up Pod resources ensures the Pods are not over-provisioned. 
-
-
-
-
-
 ## CNCF Goldilocks Overview
 Goldilocks automates the provisoning of the VPA into a K8s Cluster and provides a VPA Analytics Dashscreen to allow K8s SREs to configure or reconfigure the correct Pod spec resources for cpu/memory requests and cpu/memory limits. Goldilocks VPA is a K8s Controller that layers over K8s core VPA controllers.
 
