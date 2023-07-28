@@ -27,28 +27,11 @@ There are three levels of QoS for K8s Pods.
 #### Guaranteed QoS
 The config for QoS **Guaranteed** in the Pod spec for resource configs is as follows:
 
-```Yaml
-resources:
-  requests:
-    cpu: 15m
-    memory: 105M
-  limits:
-    cpu: 15m
-    memory: 105M
-```
-
 Configuring the `resources.requests.cpu/memory` equal to defined `resources.limits.cpu/memory` provides a ceiling cap which prevents the containers in the Pod to allocate additional cpu and memory resources during the lifecycle of the active Pod. This is a first-class QoS configuration. This configuration provides a strict requirement for the K8s Scheduler to `guarantee` schedule to the `K8s Node` without risk of starving pre-existing non-related Pods in existing or adjacent tenant namespaces. The limits configuration prevents cpu throttling (artificial latency).
 
 
 #### Burstable QoS
 The config for QoS **Burstable** in the Pod spec for resource configs is as follows:
-
-```Yaml
-resources:
-  requests:
-    cpu: 15m
-    memory: 105M
-```
 
 Configuring the `resources.requests.cpu/memory` and **NOT** configuring `resources.limits.cpu/memory` This configuration is a second-class QoS configuration. This configuration allows the Pod to allocate additional cpu and memory request levels the K8s Node offers (the bursting) and starve pre-existing Pods from the cluster or prevent new Pods to get scheduled. This configuration does not define a cpu and memory ceiling cap for Deployment. 
 
@@ -56,15 +39,11 @@ Configuring the `resources.requests.cpu/memory` and **NOT** configuring `resourc
 #### Best Effort QoS
 The config for QoS **Best Effort** in the Pod spec for resource configs is as follows:
 
-```Yaml
-resources: []
-```
-
 **NOT** configuring the `resources.requests.cpu/memory` and **NOT** configuring `resources.limits.cpu/memory` This configuration is a third-class QoS configuration. This configuration reduces the scheduling chances for the Pod as the K8s Kubelet on the worker Node relays resource availability status to the K8s Scheduler and gives a low-probability chance (best effort) in deploying Pod without declaring a low-cap or a high-cap for its required cpu and memory resources. 
 
 
 ## CNCF Goldilocks Overview
-Goldilocks automates the provisoning of the VPA into a K8s Cluster and provides a VPA Analytics Dashscreen to allow K8s SREs to configure or reconfigure the correct Pod spec resources for cpu/memory requests and cpu/memory limits. Goldilocks VPA is a K8s Controller that layers over K8s core VPA controllers.
+Goldilocks auto-provisions the VPA per-K8s Deployment into a K8s Cluster and provides a VPA Analytics Dashscreen to allow K8s SREs to configure or reconfigure the correct Pod spec resources for cpu/memory requests and cpu/memory limits. Goldilocks VPA is a K8s Controller that layers over K8s core VPA controllers.
 
 ## Prerequisites
 
@@ -202,6 +181,21 @@ If using the Goldilocks VPA as previously discussed there is a **1:1** associati
 NAME                                    MODE   CPU   MEM         PROVIDED   AGE
 goldilocks-gokit-gorillakit-enginesvc   Off    15m   104857600   True       22h
 ```
+
+## Goldilocks Dashscreen
+
+To launch the Goldilocks Dashscreen there are two approaches.
+
+ ### Create and deploy Ingress to Goldilocks Dashscreen Service (Recommended for Production)
+
+ ### Create Service Port-Foward (Testing)
+
+To port-foward the Goldilocks service do the following in own shell.
+
+```shell
+kubectl port-forward -n goldilocks svc/goldilocks-dashboard 8081:80
+```
+
 
 
 ## References
