@@ -186,7 +186,7 @@ goldilocks-gokit-gorillakit-enginesvc   Off    15m   104857600   True       22h
 
 To launch the Goldilocks Dashscreen there are two approaches.
 
- ### Create and deploy Ingress to Goldilocks Dashscreen Service (Recommended for Production)
+ ### Create and deploy Ingress to Goldilocks Dashscreen Service (Production)
 
  ### Create Service Port-Foward (Testing)
 
