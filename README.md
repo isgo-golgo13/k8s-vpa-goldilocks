@@ -147,7 +147,7 @@ kubectl describe vpa <vpa-instance-name> -n <vpa-ns>
 
 This will show the following.
 
-```Yaml
+```shell
 Spec:
   Target  Ref:
     API Version: apps/v1
