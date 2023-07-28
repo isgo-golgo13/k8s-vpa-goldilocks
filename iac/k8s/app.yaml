@@ -1,0 +1,35 @@
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gokit-gorillakit-enginesvc
+  namespace: enginesvc
+  labels:
+    app: gokit-gorillakit-enginesvc
+spec:
+  selector:
+    matchLabels:
+      app: gokit-gorillakit-enginesvc
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app:  gokit-gorillakit-enginesvc
+    spec:
+      containers:
+      - name:  gokit-gorillakit-enginesvc
+        image:  isgogolgo13/gokit-gorillakit-enginesvc:master
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 200m
+            memory: 200Mi
+        ports:
+        - containerPort: 8080
+      restartPolicy: Always
+
+
+
+
